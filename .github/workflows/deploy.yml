@@ -20,18 +20,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Assemble Pages artifact at /drinkyuuz/ subpath
+      - name: Assemble Pages artifact
         run: |
+          mkdir -p dist
+          # Copy everything in the repo (except .git and CI metadata) to dist/
+          rsync -a --exclude='.git' --exclude='.github' --exclude='dist' ./ dist/
+          # Also expose the same content under /drinkyuuz/ so links work both at
+          # rikiworld.com/drinkyuuz/ (CF preserves path) and rikiyanai.github.io/drinkyuuz/
           mkdir -p dist/drinkyuuz
-          # Copy every file (except .github and dist itself) into dist/drinkyuuz
-          rsync -a --exclude='.github' --exclude='dist' --exclude='.git' ./ dist/drinkyuuz/
-          # Also seed the root with an index that redirects to the subpath, so
-          # rikiworld.com (apex) doesn't 404 if hit directly.
-          cat > dist/index.html <<'HTML'
-          <!doctype html>
-          <html><head><meta http-equiv="refresh" content="0; url=/drinkyuuz/"></head>
-          <body>Redirecting to <a href="/drinkyuuz/">/drinkyuuz/</a>.</body></html>
-          HTML
+          rsync -a --exclude='drinkyuuz' --exclude='.git' --exclude='.github' --exclude='dist' ./ dist/drinkyuuz/
+          # Custom 404 just bounces back to the mirror's index
           cp dist/index.html dist/404.html
           printf "rikiworld.com\n" > dist/CNAME
           touch dist/.nojekyll
