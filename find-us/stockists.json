@@ -1,0 +1,195 @@
+{
+  "source": "Contacts & Leads / (For WIX) Vendors & Suppliers",
+  "count_total": 24,
+  "count_plotted": 22,
+  "stockists": [
+    {
+      "name": "Harmonious Kitchen",
+      "address": null,
+      "website": "https://www.harmonious.kitchen/",
+      "website_label": "harmonious.kitchen"
+    },
+    {
+      "name": "Calvert Woodley Fine Wines & Spirits",
+      "address": "4339 Connecticut Ave NW, Washington, DC 20008",
+      "website": "https://calvertwoodley.com/",
+      "website_label": "calvertwoodley.com",
+      "lat": 38.9451294,
+      "lng": -77.0636423
+    },
+    {
+      "name": "Compass Coffee",
+      "address": "All locations (Call for availability)",
+      "website": "https://www.compasscoffee.com/?srsltid=AfmBOogyfAiw5EgefGa8U3ngc.J4hQDGOMqtQ_g3QP2GFt1ksAsmc3K9q",
+      "website_label": "compasscoffee.com"
+    },
+    {
+      "name": "CHIBOO Bakery",
+      "address": "50 Massachusetts Ave NE, Washington, DC 20002",
+      "website": null,
+      "website_label": null,
+      "lat": 38.8977149,
+      "lng": -77.0070889
+    },
+    {
+      "name": "Matcha Time Gift Shop",
+      "address": "8034 Main St, Ellicott City, MD 21043",
+      "website": "https://www.matchatimegiftshop.com/",
+      "website_label": "matchatimegiftshop.com",
+      "lat": 39.2678279,
+      "lng": -76.7953096
+    },
+    {
+      "name": "M St",
+      "address": "51 M St NE, Washington, DC 20002",
+      "website": null,
+      "website_label": null,
+      "lat": 38.9053623,
+      "lng": -77.0071498
+    },
+    {
+      "name": "Odd Provisions",
+      "address": "3301 11th St NW, Washington, DC 20010",
+      "website": "https://www.oddprovisions.com/",
+      "website_label": "oddprovisions.com",
+      "lat": 38.9308994,
+      "lng": -77.027835
+    },
+    {
+      "name": "Provost",
+      "address": "2129 Rhode Island Ave NE, Washington DC 20018",
+      "website": "https://www.provostdc.com/",
+      "website_label": "provostdc.com",
+      "lat": 38.9298403,
+      "lng": -76.9738823
+    },
+    {
+      "name": "Old City Market and Oven",
+      "address": "522 K St NE, Washington, DC 20002",
+      "website": "https://www.oldcitymarketandoven.co/",
+      "website_label": "oldcitymarketandoven.co",
+      "lat": 38.9027699,
+      "lng": -76.9986388
+    },
+    {
+      "name": "RICE Market",
+      "address": "1608 14th St NW Lower Level, Washington, DC 20009",
+      "website": "https://www.ricedc.com/market",
+      "website_label": "ricedc.com/market",
+      "lat": 38.9114964,
+      "lng": -77.0323569
+    },
+    {
+      "name": "Shop Made In DC Union Market",
+      "address": "325 Morse Street NE, Retail #4, Washington, DC 20002",
+      "website": null,
+      "website_label": null,
+      "lat": 38.9079316,
+      "lng": -77.0003535
+    },
+    {
+      "name": "Shop Made In DC Wharf",
+      "address": "10 District Square SW, Washington, DC 20024",
+      "website": null,
+      "website_label": null,
+      "lat": 38.8802807,
+      "lng": -77.0252494
+    },
+    {
+      "name": "Shop Made In MD College Park",
+      "address": "1401 Baltimore Ave, College Park, MD 20740",
+      "website": null,
+      "website_label": null,
+      "lat": 39.0118214,
+      "lng": -76.9283663
+    },
+    {
+      "name": "Streets Market Adams Morgan",
+      "address": "1864 Columbia Rd NW, Washington, DC 20009",
+      "website": null,
+      "website_label": null,
+      "lat": 38.9207452,
+      "lng": -77.0435362
+    },
+    {
+      "name": "Streets Market Cleveland Park",
+      "address": "3427 Connecticut Ave NW, Washington, DC 20008",
+      "website": null,
+      "website_label": null,
+      "lat": 38.9352334,
+      "lng": -77.0578845
+    },
+    {
+      "name": "Streets Market Mt. Pleasant",
+      "address": "3146 Mt Pleasant St NW, Washington, DC 20010",
+      "website": null,
+      "website_label": null,
+      "lat": 38.9300955,
+      "lng": -77.0381386
+    },
+    {
+      "name": "Streets Market P St",
+      "address": "2617 P St NW, Washington, DC 20007",
+      "website": null,
+      "website_label": null,
+      "lat": 38.9095608,
+      "lng": -77.0553341
+    },
+    {
+      "name": "Streets Market 14th St",
+      "address": "2400 14th St NW, Washington, DC 20009",
+      "website": null,
+      "website_label": null,
+      "lat": 38.9208499,
+      "lng": -77.0321303
+    },
+    {
+      "name": "Streets Market 22nd St",
+      "address": "1255 22nd St NW, Washington, DC 20037",
+      "website": null,
+      "website_label": null,
+      "lat": 38.9066834,
+      "lng": -77.0481439
+    },
+    {
+      "name": "Takoma Park-Silver Spring Food Co-op",
+      "address": "201 Ethan Allen Ave, Takoma Park, MD 20912",
+      "website": "https://tpss.coop/",
+      "website_label": "tpss.coop",
+      "lat": 38.9776841,
+      "lng": -77.0059115
+    },
+    {
+      "name": "Union Kitchen Stores Eckington",
+      "address": "1625 Eckington Pl NE Suite 100, Washington, DC 20002",
+      "website": null,
+      "website_label": null,
+      "lat": 38.9120054,
+      "lng": -77.0038263
+    },
+    {
+      "name": "Union Kitchen Stores 3rd St",
+      "address": "538 3rd St NE, Washington, DC 20002",
+      "website": null,
+      "website_label": null,
+      "lat": 38.8971951,
+      "lng": -77.0022095
+    },
+    {
+      "name": "Union Kitchen Stores Barracks Row",
+      "address": "430 8th St SE, Washington, DC 20003",
+      "website": null,
+      "website_label": null,
+      "lat": 38.8828739,
+      "lng": -76.994747
+    },
+    {
+      "name": "Ogon-no-mura (Kito Yuzu)",
+      "address": "47-3 Kamihira Aza Kitominamiu Naka-cho Naka-gun, Tokushima, Japan",
+      "website": "https://omgt.shop-pro.jp/",
+      "website_label": "omgt.shop-pro.jp",
+      "lat": 33.85,
+      "lng": 134.2417
+    }
+  ]
+}

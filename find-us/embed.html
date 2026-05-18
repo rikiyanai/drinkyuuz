@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YUUZ stockists map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <style>
+    :root {
+      --navy: #1f3f89;
+      --gold: #d6a534;
+      --cream: #f3f1e9;
+      --sage: #4a8d6f;
+      --rust: #a7572a;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #1d1d1d;
+      overflow-x: hidden;
+    }
+
+    .wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      padding: 0;
+    }
+    #map {
+      width: 100%;
+      height: 420px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.4);
+      overflow: hidden;
+    }
+
+    .list-panel {
+      width: 100%;
+      height: 360px;
+      overflow-y: auto;
+      background: rgba(255,255,255,0.92);
+      border-radius: 14px;
+      padding: 6px;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+    .list-panel ul { list-style: none; margin: 0; padding: 0; }
+    .stockist {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 12px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      display: block;
+      font: inherit;
+      color: inherit;
+      transition: background 0.15s ease;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+    .stockist:last-child { border-bottom: none; }
+    .stockist:hover, .stockist.active { background: var(--cream); }
+    .stockist .name { font-weight: 700; color: var(--navy); margin: 0 0 2px; font-size: 15px; }
+    .stockist .addr { font-size: 13px; color: #555; margin: 0 0 4px; line-height: 1.45; overflow-wrap: break-word; }
+    .stockist .site { font-size: 12.5px; }
+    .stockist .site a { color: var(--rust); text-decoration: none; }
+    .stockist .site a:hover { text-decoration: underline; }
+    .stockist .tag {
+      display: inline-block;
+      background: var(--cream);
+      color: var(--rust);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-top: 2px;
+    }
+
+    .list-panel::-webkit-scrollbar { width: 8px; }
+    .list-panel::-webkit-scrollbar-thumb { background: #c9c9c9; border-radius: 4px; }
+    .list-panel::-webkit-scrollbar-track { background: transparent; }
+
+    .leaflet-popup-content { font-size: 14px; line-height: 1.5; }
+    .leaflet-popup-content strong { color: var(--navy); display: block; margin-bottom: 4px; }
+    .leaflet-popup-content .addr { color: #555; font-size: 13px; }
+    .leaflet-popup-content a { color: var(--rust); }
+
+    .yuuz-pin {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--gold);
+      box-shadow: 0 6px 12px -4px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .yuuz-pin img {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+    .yuuz-pin::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 9px solid var(--gold);
+    }
+
+    @media (max-width: 600px) {
+      #map { height: 320px; }
+      .list-panel { height: 320px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="map" aria-label="Map of YUUZ retailers"></div>
+    <div class="list-panel">
+      <ul id="stockist-list"></ul>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    (async function () {
+      const LOGO = "/media/179c5f_e0bc65113c1d4b4f8d291bf50e403735~mv2.png/v1/fill/w_78,h_78,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Logo%20blue%20background.png";
+
+      const res = await fetch('stockists.json');
+      const data = await res.json();
+      const all = data.stockists;
+      const plotted = all.filter(s => 'lat' in s);
+
+      const map = L.map('map', { scrollWheelZoom: false, zoomControl: true });
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+      }).addTo(map);
+      map.setView([38.916, -77.025], 13);
+      map.on('click', () => map.scrollWheelZoom.enable());
+
+      const icon = L.divIcon({
+        className: '',
+        html: `<div class="yuuz-pin"><img src="${LOGO}" alt="YUUZ"></div>`,
+        iconSize: [38, 46],
+        iconAnchor: [19, 46],
+        popupAnchor: [0, -42],
+      });
+
+      const markers = {};
+      plotted.forEach((s, i) => {
+        const m = L.marker([s.lat, s.lng], { icon }).addTo(map);
+        const site = s.website
+          ? `<br><a href="${s.website}" target="_blank" rel="noopener">${s.website_label || 'Website'}</a>`
+          : '';
+        const addr = s.address ? `<div class="addr">${s.address}</div>` : '';
+        m.bindPopup(`<strong>${s.name}</strong>${addr}${site}`);
+        markers[i] = m;
+      });
+
+      const list = document.getElementById('stockist-list');
+      all.forEach((s, i) => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.className = 'stockist';
+        btn.type = 'button';
+        const site = s.website
+          ? `<div class="site"><a href="${s.website}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${s.website_label || 'Visit site'}</a></div>`
+          : '';
+        const addr = s.address
+          ? `<div class="addr">${s.address}</div>`
+          : `<div class="addr"><span class="tag">Online / pop-ups</span></div>`;
+        btn.innerHTML = `<div class="name">${s.name}</div>${addr}${site}`;
+
+        const plottedIdx = plotted.indexOf(s);
+        if (plottedIdx >= 0) {
+          btn.addEventListener('click', () => {
+            const m = markers[plottedIdx];
+            document.querySelectorAll('.stockist').forEach(el => el.classList.remove('active'));
+            btn.classList.add('active');
+            map.setView([s.lat, s.lng], 16, { animate: true });
+            m.openPopup();
+          });
+        } else {
+          btn.style.cursor = 'default';
+        }
+        li.appendChild(btn);
+        list.appendChild(li);
+      });
+    })();
+  </script>
+</body>
+</html>
