@@ -527,14 +527,18 @@
 <script id="yuuz-mobile-router">
 (function () {
   try {
+    function siteRoot() {
+      var p = location.pathname;
+      if (p.indexOf("/drinkyuuz/") === 0) return "/drinkyuuz/";
+      return "/";
+    }
     function check() {
       var w = Math.min(window.innerWidth || 9999, document.documentElement.clientWidth || 9999);
-      var path = location.pathname;
-      var isMobile = w <= 760;
-      var atMobile = path.indexOf("/m/") === 0 || path === "/m";
-      if (isMobile && !atMobile) {
-        var target = "/m" + (path === "/" ? "/" : path);
-        location.replace(target + location.search + location.hash);
+      var root = siteRoot();
+      var inner = location.pathname.slice(root.length);
+      var atMobile = inner.indexOf("m/") === 0 || inner === "m";
+      if (w <= 760 && !atMobile) {
+        location.replace(root + "m/" + inner + location.search + location.hash);
       }
     }
     check();

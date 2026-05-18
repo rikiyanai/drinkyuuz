@@ -304,13 +304,19 @@
 <script id="yuuz-mobile-router">
 (function () {
   try {
+    function siteRoot() {
+      var p = location.pathname;
+      if (p.indexOf("/drinkyuuz/") === 0) return "/drinkyuuz/";
+      return "/";
+    }
     function check() {
       var w = Math.min(window.innerWidth || 0, document.documentElement.clientWidth || 0);
-      var path = location.pathname;
-      var atMobile = path.indexOf("/m/") === 0 || path === "/m";
+      var root = siteRoot();
+      var inner = location.pathname.slice(root.length);
+      var atMobile = inner.indexOf("m/") === 0 || inner === "m";
       if (w > 900 && atMobile) {
-        var target = path.slice(2) || "/";
-        location.replace(target + location.search + location.hash);
+        var rest = inner === "m" ? "" : inner.slice(2);
+        location.replace(root + rest + location.search + location.hash);
       }
     }
     check();
